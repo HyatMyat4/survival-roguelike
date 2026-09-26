@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://b6q7upi51lerc"]
+
+[ext_resource type="Texture2D" uid="uid://d2xv2temtgat6" path="res://assets/player/player.png" id="1_8afob"]
+[ext_resource type="Script" uid="uid://bmi1e437rscfh" path="res://scenes/player/Player.cs" id="1_dovo2"]
+[ext_resource type="PackedScene" uid="uid://br5f4jbtc88ho" path="res://scenes/ability/SwordAbilituyController.tscn" id="2_gmlin"]
+[ext_resource type="PackedScene" uid="uid://cpkcw4d5bou52" path="res://scenes/game_object/game_camera/GameCamera.tscn" id="2_lvxji"]
+[ext_resource type="PackedScene" uid="uid://c2lnlnsf7wjn4" path="res://scenes/component/HealthComponent.tscn" id="2_p47bc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p47bc"]
+bg_color = Color(0.24705882, 0.14901961, 0.19215687, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_75vfm"]
+bg_color = Color(0.2627451, 0.88235295, 0.7019608, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.24705882, 0.14901961, 0.19215687, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lvxji"]
+radius = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p47bc"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dovo2"]
+radius = 6.0
+
+[node name="Player" type="CharacterBody2D" unique_id=487183043 groups=["player"]]
+collision_layer = 0
+motion_mode = 1
+script = ExtResource("1_dovo2")
+
+[node name="HealthComponent" parent="." unique_id=665467060 instance=ExtResource("2_p47bc")]
+
+[node name="GameCamera" parent="." unique_id=1311154649 instance=ExtResource("2_lvxji")]
+
+[node name="AbilityManager" type="Node" parent="." unique_id=50355638]
+
+[node name="SwordAbilituyController" parent="AbilityManager" unique_id=519592829 instance=ExtResource("2_gmlin")]
+
+[node name="Timer" type="Timer" parent="." unique_id=1788147651]
+wait_time = 0.5
+one_shot = true
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1526316799]
+custom_minimum_size = Vector2(32, 5)
+offset_left = -16.0
+offset_top = -23.0
+offset_right = 16.0
+offset_bottom = -18.0
+pivot_offset = Vector2(16, 3)
+theme_override_styles/background = SubResource("StyleBoxFlat_p47bc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_75vfm")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="PickUpArea2D" type="Area2D" parent="." unique_id=2122415388]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea2D" unique_id=2141663463]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_lvxji")
+
+[node name="CollisionArea2D" type="Area2D" parent="." unique_id=1382608084]
+position = Vector2(0, -7)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea2D" unique_id=1077401760]
+light_mask = 0
+visibility_layer = 0
+shape = SubResource("CircleShape2D_p47bc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=36031018]
+texture = ExtResource("1_8afob")
+offset = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=812145211]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_dovo2")

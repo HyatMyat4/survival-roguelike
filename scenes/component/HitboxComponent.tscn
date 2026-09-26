@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dr46l3sxudij2"]
+
+[ext_resource type="Script" uid="uid://6r0l5cerp7w6" path="res://scenes/component/HitboxComponent.cs" id="1_ieu40"]
+
+[node name="HitboxComponent" type="Area2D" unique_id=249104117]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_ieu40")
+metadata/_edit_horizontal_guides_ = [106.0]

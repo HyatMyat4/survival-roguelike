@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b8dtlopmj6v26"]
+
+[ext_resource type="Script" uid="uid://cihoqc3o8o2p7" path="res://scenes/ui/ArenaTimeUi.cs" id="1_ymp5c"]
+
+[node name="ArenaTimeUI" type="CanvasLayer" unique_id=1281314692]
+script = ExtResource("1_ymp5c")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1632218707]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 8
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=1178618093]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "test"

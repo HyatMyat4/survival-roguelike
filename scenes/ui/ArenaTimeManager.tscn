@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cqu3cp23eaqyu"]
+
+[ext_resource type="Script" uid="uid://khkxtg2to2d5" path="res://scenes/ui/ArenaTimeManager.cs" id="1_cp4od"]
+
+[node name="ArenaTimeManager" type="Node" unique_id=1962175826]
+script = ExtResource("1_cp4od")
+
+[node name="Timer" type="Timer" parent="." unique_id=1419768044]
+wait_time = 300.0
+one_shot = true
+autostart = true

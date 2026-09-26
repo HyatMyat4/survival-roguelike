@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://chppct00ckxnp"]
+
+[ext_resource type="Script" uid="uid://b5vfjxjgm4u6m" path="res://scenes/game_object/experience_vial/ExperienceVial.cs" id="1_3hq8w"]
+[ext_resource type="Texture2D" uid="uid://syje718lq5k5" path="res://scenes/game_object/experience_vial/experience_vial.png" id="1_mg1kq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3hq8w"]
+radius = 13.038404
+
+[node name="ExperienceVial" type="Node2D" unique_id=3537564]
+script = ExtResource("1_3hq8w")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=259182235]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1086438633]
+shape = SubResource("CircleShape2D_3hq8w")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=632898204]
+texture = ExtResource("1_mg1kq")

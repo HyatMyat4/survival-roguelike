@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://da73ecan38mqs"]
+
+[ext_resource type="Script" uid="uid://cqjijsipn7esr" path="res://resources/upgrades/AbilityUpgrade.cs" id="1_pyxp1"]
+
+[resource]
+script = ExtResource("1_pyxp1")
+id = "SwordRate"
+name = "Sword Quickness"
+description = "Increases sword attack rate by 10%"
