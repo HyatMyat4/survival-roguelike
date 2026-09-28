@@ -6,6 +6,69 @@
 [ext_resource type="PackedScene" uid="uid://cpkcw4d5bou52" path="res://scenes/game_object/game_camera/GameCamera.tscn" id="2_lvxji"]
 [ext_resource type="PackedScene" uid="uid://c2lnlnsf7wjn4" path="res://scenes/component/HealthComponent.tscn" id="2_p47bc"]
 
+[sub_resource type="Animation" id="Animation_75vfm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_p47bc"]
+resource_name = "Walk"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.100075215, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, 7.1525574e-07)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.10024026, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.15707963267948966, 0.15707963267948966]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_75vfm"]
+_data = {
+&"RESET": SubResource("Animation_75vfm"),
+&"Walk": SubResource("Animation_p47bc")
+}
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p47bc"]
 bg_color = Color(0.24705882, 0.14901961, 0.19215687, 1)
 
@@ -31,13 +94,17 @@ collision_layer = 0
 motion_mode = 1
 script = ExtResource("1_dovo2")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1699242918]
+libraries/ = SubResource("AnimationLibrary_75vfm")
+autoplay = &"Walk"
+
 [node name="HealthComponent" parent="." unique_id=665467060 instance=ExtResource("2_p47bc")]
 
 [node name="GameCamera" parent="." unique_id=1311154649 instance=ExtResource("2_lvxji")]
 
-[node name="AbilityManager" type="Node" parent="." unique_id=50355638]
+[node name="Abilites" type="Node" parent="." unique_id=50355638]
 
-[node name="SwordAbilituyController" parent="AbilityManager" unique_id=519592829 instance=ExtResource("2_gmlin")]
+[node name="SwordAbilituyController" parent="Abilites" unique_id=519592829 instance=ExtResource("2_gmlin")]
 
 [node name="Timer" type="Timer" parent="." unique_id=1788147651]
 wait_time = 0.5
@@ -57,6 +124,7 @@ value = 0.5
 show_percentage = false
 
 [node name="PickUpArea2D" type="Area2D" parent="." unique_id=2122415388]
+visible = false
 collision_layer = 16
 collision_mask = 0
 
@@ -65,6 +133,7 @@ position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_lvxji")
 
 [node name="CollisionArea2D" type="Area2D" parent="." unique_id=1382608084]
+visible = false
 position = Vector2(0, -7)
 collision_layer = 0
 collision_mask = 8
@@ -74,10 +143,13 @@ light_mask = 0
 visibility_layer = 0
 shape = SubResource("CircleShape2D_p47bc")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=36031018]
+[node name="Visual" type="Node2D" parent="." unique_id=2088293559]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual" unique_id=36031018]
 texture = ExtResource("1_8afob")
 offset = Vector2(0, -8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=812145211]
+visible = false
 position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_dovo2")

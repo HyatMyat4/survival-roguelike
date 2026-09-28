@@ -6,6 +6,9 @@ public partial class AbilityUpgrade : Resource
 	public string id;
 
 	[Export]
+	public int maxQuantity;
+
+	[Export]
 	public string name;
 
 	[Export(PropertyHint.MultilineText)]

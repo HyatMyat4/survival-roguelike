@@ -1,4 +1,6 @@
+using System.IO;
 using Godot;
+using Godot.Collections;
 
 public partial class Player : CharacterBody2D
 {
@@ -16,7 +18,11 @@ public partial class Player : CharacterBody2D
 
 	private ProgressBar healthBar;
 
+	private Node abilites;
 
+	private AnimationPlayer animationPlayer;
+
+	private Node2D visual;
 
 	public override void _Ready()
 	{
@@ -24,11 +30,16 @@ public partial class Player : CharacterBody2D
 		healthComponent = GetNode<HealthComponent>("HealthComponent");
 		dimageIntervalTimer = GetNode<Timer>("Timer");
 		healthBar = GetNode<ProgressBar>("HealthBar");
+		abilites = GetNode<Node>("Abilites");
+		visual = GetNode<Node2D>("Visual");
+		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+
 
 		collisionArea.BodyEntered += OnBodyEntered;
 		collisionArea.BodyExited += OnBodyExited;
 		dimageIntervalTimer.Timeout += OnDimageIntervalTimerTimeOut;
 		healthComponent.HealthChanged += OnHealthChanged;
+		GameEvent.Instance.AbilityUpgradeAdded += OnAbilityUpgradeAdded;
 		UpdateHealthDisplay();
 	}
 	public override void _PhysicsProcess(double delta)
@@ -46,6 +57,25 @@ public partial class Player : CharacterBody2D
 		);
 
 		MoveAndSlide();
+
+		if (direction.X != 0 || direction.Y != 0)
+		{
+			animationPlayer.Play("Walk");
+		}
+		else
+		{
+			animationPlayer.Play("RESET");
+		}
+
+		var moveSign = Mathf.Sign(direction.X);
+
+		if (moveSign != 0)
+		{
+			visual.Scale = new Vector2(
+				Mathf.Abs(visual.Scale.X) * moveSign,
+				visual.Scale.Y
+			);
+		}
 	}
 
 	private static Vector2 GetMovementVector()
@@ -94,5 +124,15 @@ public partial class Player : CharacterBody2D
 	private void OnHealthChanged()
 	{
 		UpdateHealthDisplay();
+	}
+	private void OnAbilityUpgradeAdded(
+		AbilityUpgrade upgrade,
+		Dictionary<string, CurrentUpgrade> currentUpgrades
+	)
+	{
+		if (upgrade is not Ability)
+			return;
+		var abilityUprage = upgrade as Ability;
+		abilites.AddChild(abilityUprage.abilityControllerScene.Instantiate());
 	}
 }

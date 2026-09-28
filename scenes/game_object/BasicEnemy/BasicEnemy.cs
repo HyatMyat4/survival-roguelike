@@ -8,10 +8,13 @@ public partial class BasicEnemy : CharacterBody2D
 
 	private HealthComponent healthComponent;
 
+	private Node2D visual;
+
 
 	public override void _Ready()
 	{
 		healthComponent = GetNode<HealthComponent>("HealthComponent");
+		visual = GetNode<Node2D>("Visuals");
 	}
 
 
@@ -19,7 +22,21 @@ public partial class BasicEnemy : CharacterBody2D
 	{
 		var direction = GetDirectionToPlayer();
 		Velocity = direction * MAX_SPEEE;
+
 		MoveAndSlide();
+
+
+		var moveSign = Mathf.Sign(direction.X);
+
+		if (moveSign != 0)
+		{
+			visual.Scale = new Vector2(
+				Mathf.Abs(visual.Scale.X) * moveSign,
+				visual.Scale.Y
+			);
+		}
+
+
 	}
 
 	private Vector2 GetDirectionToPlayer()
@@ -30,6 +47,8 @@ public partial class BasicEnemy : CharacterBody2D
 		{
 			return (playerNode.GlobalPosition - GlobalPosition).Normalized();
 		}
+
+
 
 		return Vector2.Zero;
 	}

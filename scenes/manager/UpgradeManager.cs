@@ -25,33 +25,26 @@ public partial class UpgradeManager : Node
 		experienceManager.LevelUp += OnLevelUp;
 	}
 
-	private void OnLevelUp(int newLevel)
+	private Godot.Collections.Array<AbilityUpgrade> PickUpgrades(int amount)
 	{
-		if (upgradePool.Count == 0)
-			return;
+		var filteredUpgrades = upgradePool.Duplicate();
+		var chosenUpgrades = new Godot.Collections.Array<AbilityUpgrade>();
 
-		var chosenUpgrade = upgradePool.PickRandom();
-
-		if (chosenUpgrade == null)
-			return;
-
-		var upgradeScreenInstance =
-			upgradeScreenScene.Instantiate() as UpgradeScreen;
-
-		if (upgradeScreenInstance == null)
-			return;
-
-		AddChild(upgradeScreenInstance);
-
-		var upgrades = new Godot.Collections.Array<AbilityUpgrade>
+		for (int i = 0; i < amount && filteredUpgrades.Count > 0; i++)
 		{
-			chosenUpgrade
-		};
 
-		upgradeScreenInstance.SetAbilityUpgrades(upgrades);
+			if (filteredUpgrades.Count == 0)
+				break;
+			var chosenUpgrade = filteredUpgrades.PickRandom();
 
-		upgradeScreenInstance.UpgradeSelected += OnUpgradeSelected;
+
+			chosenUpgrades.Add(chosenUpgrade);
+			filteredUpgrades.Remove(chosenUpgrade);
+		}
+
+		return chosenUpgrades;
 	}
+
 
 	private void OnUpgradeSelected(AbilityUpgrade upgrade)
 	{
@@ -73,9 +66,38 @@ public partial class UpgradeManager : Node
 			currentUpgrades[upgrade.id].Quantity++;
 		}
 
+		if (upgrade.maxQuantity > 0)
+		{
+			var currentQuantity = currentUpgrades[upgrade.id].Quantity;
+
+			if (currentQuantity >= upgrade.maxQuantity)
+			{
+				upgradePool.Remove(upgrade);
+			}
+		}
+
 		GameEvent.Instance.EmitAbilityUpgradeAdded(
 			upgrade,
 			currentUpgrades
 		);
+	}
+
+	private void OnLevelUp(int newLevel)
+	{
+		if (upgradePool.Count == 0)
+			return;
+
+		var upgradeScreenInstance =
+			upgradeScreenScene.Instantiate() as UpgradeScreen;
+
+		if (upgradeScreenInstance == null)
+			return;
+
+		AddChild(upgradeScreenInstance);
+
+		var upgrades = PickUpgrades(2);
+
+		upgradeScreenInstance.SetAbilityUpgrades(upgrades);
+		upgradeScreenInstance.UpgradeSelected += OnUpgradeSelected;
 	}
 }

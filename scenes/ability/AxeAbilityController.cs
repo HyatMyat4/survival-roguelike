@@ -1,15 +1,36 @@
 using Godot;
-using System;
 
 public partial class AxeAbilityController : Node
 {
-	// Called when the node enters the scene tree for the first time.
+	[Export]
+	private PackedScene axeAbilityScene;
+
+	private Timer timer;
+
+	private int dimage = 10;
+
 	public override void _Ready()
 	{
+		timer = GetNode<Timer>("Timer");
+		timer.Timeout += OnTimerTimeOut;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	private void OnTimerTimeOut()
 	{
+		var player = GetTree().GetFirstNodeInGroup("player") as Player;
+
+		if (player == null) return;
+
+		var foreground = GetTree().GetFirstNodeInGroup("foreground_layer") as Node2D;
+
+		if (foreground == null) return;
+
+		var axeInstance = axeAbilityScene.Instantiate() as AxeAbility;
+
+		foreground.AddChild(axeInstance);
+
+		axeInstance.GlobalPosition = player.GlobalPosition;
+		axeInstance.hitBoxComponent.Damage = dimage;
 	}
+
 }
