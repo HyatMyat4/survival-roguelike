@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bbtrp32usbin3"]
+
+[ext_resource type="Script" uid="uid://d3tu0r3ra4bws" path="res://scenes/component/HitFlashComponent.cs" id="1_cu6u8"]
+
+[node name="HitFlashComponent" type="Node" unique_id=862374550]
+script = ExtResource("1_cu6u8")

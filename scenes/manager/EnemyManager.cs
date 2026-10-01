@@ -8,20 +8,26 @@ public partial class EnemyManager : Node
 	private PackedScene BasicEnemy;
 
 	[Export]
+	private PackedScene WizardEnemy;
+
+	[Export]
 	private ArenaTimeManager arenaTimeManager;
 
 	private Timer timer;
 
 	double baseSpawnTime = 0;
 
+	private WeightedTable enemyTable = new();
 
 	public override void _Ready()
 	{
+		enemyTable.AddItem(BasicEnemy, 10);
 
 		timer = GetNode<Timer>("Timer");
 		baseSpawnTime = timer.WaitTime;
 		timer.Timeout += OnTimerTimeout;
 		arenaTimeManager.ArenaDifficultyIncreased += OnArenaDifficultyIncrease;
+
 	}
 
 	private Vector2 GetSpawnPosition()
@@ -65,7 +71,8 @@ public partial class EnemyManager : Node
 	}
 	private void OnTimerTimeout()
 	{
-		var enemy = BasicEnemy.Instantiate<Node2D>();
+		var enemyScene = enemyTable.PickItem();
+		var enemy = enemyScene.Instantiate<Node2D>();
 		var entitiesLayer = GetTree().GetFirstNodeInGroup("entities_layer");
 		entitiesLayer.AddChild(enemy);
 		enemy.GlobalPosition = GetSpawnPosition();
@@ -79,5 +86,10 @@ public partial class EnemyManager : Node
 		GD.Print($"Time off: {timeOff}");
 
 		timer.WaitTime = baseSpawnTime - timeOff;
+
+		if (arenaDifficulty == 1)
+		{
+			enemyTable.AddItem(WizardEnemy, 20);
+		}
 	}
 }

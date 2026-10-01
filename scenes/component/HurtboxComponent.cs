@@ -1,9 +1,13 @@
+using System;
 using Godot;
 
 public partial class HurtboxComponent : Area2D
 {
     [Export]
     private HealthComponent healthComponent;
+
+    private PackedScene floatingTextScene =
+        ResourceLoader.Load<PackedScene>("res://scenes/ui/FloatingText.tscn");
 
     public override void _Ready()
     {
@@ -18,6 +22,14 @@ public partial class HurtboxComponent : Area2D
         if (area is HitboxComponent hitbox)
         {
             healthComponent.Damage(hitbox.Damage);
+
+            var floatingText = floatingTextScene.Instantiate<FloatingText>();
+
+            GetTree().GetFirstNodeInGroup("foreground_layer").AddChild(floatingText);
+
+            floatingText.GlobalPosition = GlobalPosition + (Vector2.Up * 16);
+            floatingText.Start(hitbox.Damage.ToString());
         }
+
     }
 }

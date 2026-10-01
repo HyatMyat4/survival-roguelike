@@ -43,6 +43,10 @@ enemy=""
 entities_layer=""
 foreground_layer=""
 
+[gui]
+
+theme/custom="uid://imq3iv8tpvw1"
+
 [input]
 
 move_left={

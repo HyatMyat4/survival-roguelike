@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dc27mhkrwnfvs" path="res://scenes/game_object/BasicEnemy/BasicEnemy.tscn" id="4_l3cfh"]
 [ext_resource type="PackedScene" uid="uid://57ang5cmytem" path="res://scenes/manager/ExperienceManager.tscn" id="5_yyfjg"]
 [ext_resource type="PackedScene" uid="uid://1vdugnwdicof" path="res://scenes/manager/UpgradeManager.tscn" id="7_b1x3f"]
+[ext_resource type="PackedScene" uid="uid://cc4anmkmw5g6q" path="res://scenes/game_object/BasicEnemy/WizardEnemy.tscn" id="7_ouso4"]
 
 [node name="Main" type="Node" unique_id=1384544731]
 script = ExtResource("1_ouso4")
@@ -27,6 +28,7 @@ endScreenScene = ExtResource("4_a8run")
 
 [node name="EnemyManager" parent="." unique_id=1994912392 node_paths=PackedStringArray("arenaTimeManager") instance=ExtResource("1_l3cfh")]
 BasicEnemy = ExtResource("4_l3cfh")
+WizardEnemy = ExtResource("7_ouso4")
 arenaTimeManager = NodePath("../ArenaTimeManager")
 
 [node name="ExperienceManager" parent="." unique_id=2094848897 instance=ExtResource("5_yyfjg")]

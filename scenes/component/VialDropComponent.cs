@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class VialDropComponent : Node
 {
@@ -9,39 +8,41 @@ public partial class VialDropComponent : Node
 	[Export]
 	private HealthComponent healthComponent;
 
+	[Export(PropertyHint.Range, "0,100,1")]
+	private float dropPercent = 25f;
+
 	public override void _Ready()
 	{
 		if (healthComponent == null)
-		{
-			GD.PrintErr("HealthComponent is not assigned!");
 			return;
-		}
 
 		healthComponent.Died += OnHealthDied;
 	}
 
 	private void OnHealthDied()
 	{
-		GD.Print("Enemy died! Dropping vial...");
 		CallDeferred(nameof(DropVial));
 	}
 
 	private void DropVial()
 	{
 		if (vialScene == null)
-		{
-			GD.PrintErr("VialScene is not assigned!");
 			return;
-		}
 
-		if (Owner is Node2D owner)
-		{
-			Node2D vial = vialScene.Instantiate<Node2D>();
+		if (GD.Randf() > dropPercent / 100f)
+			return;
 
-			var entitiesLayer = GetTree().GetFirstNodeInGroup("entities_layer");
-			entitiesLayer.AddChild(vial);
+		if (Owner is not Node2D owner)
+			return;
 
-			vial.GlobalPosition = owner.GlobalPosition;
-		}
+		var entitiesLayer = GetTree().GetFirstNodeInGroup("entities_layer");
+
+		if (entitiesLayer == null)
+			return;
+
+		Node2D vial = vialScene.Instantiate<Node2D>();
+
+		entitiesLayer.AddChild(vial);
+		vial.GlobalPosition = owner.GlobalPosition;
 	}
 }

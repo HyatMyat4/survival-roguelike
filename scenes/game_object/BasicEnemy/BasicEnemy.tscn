@@ -4,8 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://q4204q4adtnf" path="res://assets/enemy/spider.png" id="2_b3rx4"]
 [ext_resource type="PackedScene" uid="uid://b6371y8vf7ogn" path="res://scenes/component/VialDropComponent.tscn" id="2_jmw3n"]
 [ext_resource type="PackedScene" uid="uid://c2lnlnsf7wjn4" path="res://scenes/component/HealthComponent.tscn" id="2_x6l01"]
+[ext_resource type="PackedScene" uid="uid://dvamgp126j2ul" path="res://scenes/component/VelocityComponent.tscn" id="4_d0q30"]
 [ext_resource type="PackedScene" uid="uid://ltpnr6m8ohtg" path="res://scenes/component/HurtboxComponent.tscn" id="4_s5wg0"]
 [ext_resource type="PackedScene" uid="uid://dqmpxp7gtiwmq" path="res://scenes/component/DeathComponent.tscn" id="6_8p57t"]
+[ext_resource type="PackedScene" uid="uid://bbtrp32usbin3" path="res://scenes/component/HitFlashComponent.tscn" id="8_flepq"]
 
 [sub_resource type="Animation" id="Animation_8p57t"]
 length = 0.001
@@ -88,6 +90,11 @@ autoplay = &"walk"
 
 [node name="VialDropComponent" parent="." unique_id=179123989 node_paths=PackedStringArray("healthComponent") instance=ExtResource("2_jmw3n")]
 healthComponent = NodePath("../HealthComponent")
+dropPercent = 100.0
+
+[node name="VelocityComponent" parent="." unique_id=418521719 instance=ExtResource("4_d0q30")]
+maxSpeed = 130.0
+acceleration = 140.0
 
 [node name="DeathComponent" parent="." unique_id=650102018 node_paths=PackedStringArray("healthComponent", "sprite2D") instance=ExtResource("6_8p57t")]
 healthComponent = NodePath("../HealthComponent")
@@ -99,6 +106,10 @@ healthComponent = NodePath("../HealthComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1518504399]
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_s5wg0")
+
+[node name="HitFlashComponent" parent="." unique_id=1892332605 node_paths=PackedStringArray("healthComponent", "sprite2D") instance=ExtResource("8_flepq")]
+healthComponent = NodePath("../HealthComponent")
+sprite2D = NodePath("../Visuals/Sprite2D")
 
 [node name="Visuals" type="Node2D" parent="." unique_id=7806755]
 

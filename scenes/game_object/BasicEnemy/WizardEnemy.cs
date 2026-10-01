@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class BasicEnemy : CharacterBody2D
+public partial class WizardEnemy : CharacterBody2D
 {
 	private HealthComponent healthComponent;
 	private Node2D visual;
@@ -66,6 +66,4 @@ public partial class BasicEnemy : CharacterBody2D
 			);
 		}
 	}
-
-
 }
