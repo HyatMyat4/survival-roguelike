@@ -23,13 +23,19 @@ public partial class HurtboxComponent : Area2D
         {
             healthComponent.Damage(hitbox.Damage);
 
-            var floatingText = floatingTextScene.Instantiate<FloatingText>();
+            var floatingText =
+                floatingTextScene.Instantiate<FloatingText>();
 
-            GetTree().GetFirstNodeInGroup("foreground_layer").AddChild(floatingText);
+            GetTree()
+                .GetFirstNodeInGroup("foreground_layer")
+                .AddChild(floatingText);
 
-            floatingText.GlobalPosition = GlobalPosition + (Vector2.Up * 16);
-            floatingText.Start(hitbox.Damage.ToString());
+            floatingText.GlobalPosition =
+                GlobalPosition + (Vector2.Up * 16);
+
+            var damage = Mathf.RoundToInt(hitbox.Damage);
+
+            floatingText.Start(damage.ToString());
         }
-
     }
 }

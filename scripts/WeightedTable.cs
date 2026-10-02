@@ -1,17 +1,30 @@
 using Godot;
-using Godot.Collections;
+using System;
+using System.Collections.Generic;
 
-public partial class WeightedTable : Node
+public class WeightedTable<T> where T : class
 {
-	private Array<Dictionary> items = new();
+	private class WeightedItem
+	{
+		public T Item { get; }
+		public float Weight { get; }
 
-	private float weightSum = 0f;
+		public WeightedItem(T item, float weight)
+		{
+			Item = item;
+			Weight = weight;
+		}
+	}
 
-	public void AddItem(PackedScene item, float weight)
+	private readonly List<WeightedItem> items = new();
+
+	public int Count => items.Count;
+
+	public void AddItem(T item, float weight)
 	{
 		if (item == null)
 		{
-			GD.PrintErr("Cannot add a null PackedScene.");
+			GD.PrintErr("Cannot add a null item.");
 			return;
 		}
 
@@ -21,38 +34,58 @@ public partial class WeightedTable : Node
 			return;
 		}
 
-		items.Add(new Dictionary
-		{
-			{ "item", item },
-			{ "weight", weight }
-		});
-
-		weightSum += weight;
+		items.Add(new WeightedItem(item, weight));
 	}
 
-	public PackedScene PickItem()
+	public T PickItem(IEnumerable<T> exclude)
 	{
-		if (items.Count == 0 || weightSum <= 0f)
+		var excluded = new HashSet<T>(exclude);
+
+		float availableWeight = 0f;
+
+		foreach (var item in items)
 		{
-			GD.PrintErr("WeightedTable is empty.");
-			return null;
+			if (!excluded.Contains(item.Item))
+			{
+				availableWeight += item.Weight;
+			}
 		}
 
+		if (availableWeight <= 0f)
+			return null;
+
 		float chosenWeight =
-			(float)GD.RandRange(0.0, weightSum);
+			(float)GD.RandRange(0.0, availableWeight);
 
-		foreach (Dictionary item in items)
+		foreach (var item in items)
 		{
-			float weight = (float)item["weight"];
+			if (excluded.Contains(item.Item))
+				continue;
 
-			if (chosenWeight <= weight)
-			{
-				return (PackedScene)item["item"];
-			}
+			chosenWeight -= item.Weight;
 
-			chosenWeight -= weight;
+			if (chosenWeight <= 0f)
+				return item.Item;
 		}
 
 		return null;
+	}
+
+	public T PickItem()
+	{
+		return PickItem(Array.Empty<T>());
+	}
+
+	public void Remove(T value)
+	{
+		for (int i = items.Count - 1; i >= 0; i--)
+		{
+			if (EqualityComparer<T>.Default.Equals(
+				items[i].Item,
+				value))
+			{
+				items.RemoveAt(i);
+			}
+		}
 	}
 }

@@ -2,6 +2,7 @@ using Godot;
 using System.Linq;
 using Godot.Collections;
 using System;
+
 public partial class SwordAbilituyController : Node
 {
 	private const int MAX_RANGE = 150;
@@ -9,26 +10,26 @@ public partial class SwordAbilituyController : Node
 	[Export]
 	private PackedScene swordAbility;
 
-	private float damage = 5;
+	private float baseDamage = 5;
+	private float additionalDamagePercent = 1;
 
 	private double baseWaitTime;
-
 	private Timer timer;
-
 
 	public override void _Ready()
 	{
 		timer = GetNode<Timer>("Timer");
-
 		timer.Timeout += OnTimerTimeout;
 
 		baseWaitTime = timer.WaitTime;
 
 		GameEvent.Instance.AbilityUpgradeAdded += OnAbilityUpgradeAdded;
 	}
+
 	private void OnTimerTimeout()
 	{
-		var player = GetTree().GetFirstNodeInGroup("player") as Node2D;
+		var player =
+			GetTree().GetFirstNodeInGroup("player") as Node2D;
 
 		if (player == null)
 			return;
@@ -55,35 +56,66 @@ public partial class SwordAbilituyController : Node
 				)
 		);
 
-		var swordInstance = swordAbility.Instantiate<SwordAbility>() as SwordAbility;
-		var foreGroundLayer = GetTree().GetFirstNodeInGroup("foreground_layer");
-		foreGroundLayer.AddChild(swordInstance);
-		swordInstance.hitBoxComponent.Damage = damage;
-		swordInstance.GlobalPosition =
-			enemies[0].GlobalPosition +
-			Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau)) * 4f;
+		var swordInstance =
+			swordAbility.Instantiate<SwordAbility>();
 
-		var enemyDirection =
-			enemies[0].GlobalPosition - swordInstance.GlobalPosition;
+		var foregroundLayer =
+			GetTree().GetFirstNodeInGroup("foreground_layer");
 
-		swordInstance.Rotation = enemyDirection.Angle();
-	}
-
-
-	private void OnAbilityUpgradeAdded(
-	AbilityUpgrade upgrade,
-	Dictionary<string, CurrentUpgrade> currentUpgrade)
-	{
-		if (upgrade.id != "SwordRate")
+		if (foregroundLayer == null)
 			return;
 
-		var quantity = currentUpgrade["SwordRate"].Quantity;
+		foregroundLayer.AddChild(swordInstance);
 
-		var percentReduction = Mathf.Min(quantity * 0.1f, 0.9f);
+		swordInstance.hitBoxComponent.Damage =
+			baseDamage * additionalDamagePercent;
 
-		timer.WaitTime = baseWaitTime * (1.0f - percentReduction);
-		timer.Start();
+		swordInstance.GlobalPosition =
+			enemies[0].GlobalPosition +
+			Vector2.Right.Rotated(
+				(float)GD.RandRange(0, Mathf.Tau)
+			) * 4f;
 
-		GD.Print("Wait Time", timer.WaitTime);
+		var enemyDirection =
+			enemies[0].GlobalPosition -
+			swordInstance.GlobalPosition;
+
+		swordInstance.Rotation =
+			enemyDirection.Angle();
+	}
+
+	private void OnAbilityUpgradeAdded(
+		AbilityUpgrade upgrade,
+		Dictionary<string, CurrentUpgrade> currentUpgrade)
+	{
+		if (upgrade.id == "SwordRate")
+		{
+			var quantity =
+				currentUpgrade["SwordRate"].Quantity;
+
+			var percentReduction =
+				Mathf.Min(quantity * 0.1f, 0.9f);
+
+			timer.WaitTime =
+				baseWaitTime * (1.0f - percentReduction);
+
+			timer.Start();
+
+			GD.Print($"Sword Rate: {quantity}");
+			GD.Print($"Sword Wait Time: {timer.WaitTime}");
+		}
+		else if (upgrade.id == "SwordDamage")
+		{
+			var quantity =
+				currentUpgrade["SwordDamage"].Quantity;
+
+			additionalDamagePercent =
+				1.0f + quantity * 0.15f;
+
+			GD.Print($"Sword Damage Level: {quantity}");
+			GD.Print(
+				$"Sword Damage: {baseDamage * additionalDamagePercent}"
+			);
+		}
 	}
 }

@@ -15,77 +15,103 @@ public partial class EnemyManager : Node
 
 	private Timer timer;
 
-	double baseSpawnTime = 0;
+	private double baseSpawnTime = 0;
 
-	private WeightedTable enemyTable = new();
+	private WeightedTable<PackedScene> enemyTable = new();
 
 	public override void _Ready()
 	{
 		enemyTable.AddItem(BasicEnemy, 10);
 
 		timer = GetNode<Timer>("Timer");
-		baseSpawnTime = timer.WaitTime;
-		timer.Timeout += OnTimerTimeout;
-		arenaTimeManager.ArenaDifficultyIncreased += OnArenaDifficultyIncrease;
 
+		baseSpawnTime = timer.WaitTime;
+
+		timer.Timeout += OnTimerTimeout;
+
+		arenaTimeManager.ArenaDifficultyIncreased +=
+			OnArenaDifficultyIncrease;
 	}
 
 	private Vector2 GetSpawnPosition()
 	{
-		var player = GetTree().GetFirstNodeInGroup("player") as Node2D;
+		var player =
+			GetTree().GetFirstNodeInGroup("player") as Node2D;
 
 		if (player == null)
 			return Vector2.Zero;
 
 		var spawnPosition = Vector2.Zero;
 
-		var randomDirection = Vector2.Right.Rotated(
-			(float)GD.RandRange(0.0, Mathf.Tau)
-		);
+		var randomDirection =
+			Vector2.Right.Rotated(
+				(float)GD.RandRange(0.0, Mathf.Tau)
+			);
 
 		for (int i = 0; i < 4; i++)
 		{
 			spawnPosition =
-				player.GlobalPosition + randomDirection * SPAWN_RADIUS;
+				player.GlobalPosition +
+				randomDirection * SPAWN_RADIUS;
 
-			var queryParameters = PhysicsRayQueryParameters2D.Create(
-				player.GlobalPosition,
-				spawnPosition,
-				1
-			);
+			var queryParameters =
+				PhysicsRayQueryParameters2D.Create(
+					player.GlobalPosition,
+					spawnPosition,
+					1
+				);
 
-			var result = GetTree().Root.World2D.DirectSpaceState
-				.IntersectRay(queryParameters);
+			var result =
+				GetTree().Root.World2D.DirectSpaceState
+					.IntersectRay(queryParameters);
 
 			if (result.Count == 0)
 			{
 				break;
 			}
 
-			randomDirection = randomDirection.Rotated(
-				Mathf.DegToRad(90)
-			);
+			randomDirection =
+				randomDirection.Rotated(
+					Mathf.DegToRad(90)
+				);
 		}
 
 		return spawnPosition;
 	}
+
 	private void OnTimerTimeout()
 	{
 		var enemyScene = enemyTable.PickItem();
-		var enemy = enemyScene.Instantiate<Node2D>();
-		var entitiesLayer = GetTree().GetFirstNodeInGroup("entities_layer");
+
+		if (enemyScene == null)
+			return;
+
+		var enemy =
+			enemyScene.Instantiate<Node2D>();
+
+		var entitiesLayer =
+			GetTree().GetFirstNodeInGroup("entities_layer");
+
+		if (entitiesLayer == null)
+			return;
+
 		entitiesLayer.AddChild(enemy);
+
 		enemy.GlobalPosition = GetSpawnPosition();
 	}
 
-
 	private void OnArenaDifficultyIncrease(int arenaDifficulty)
 	{
-		double timeOff = arenaDifficulty * (0.1 / 12.0);
-		timeOff = Mathf.Min((float)timeOff, 0.7f);
+		double timeOff =
+			arenaDifficulty * (0.1 / 12.0);
+
+		timeOff =
+			Mathf.Min((float)timeOff, 0.7f);
+
 		GD.Print($"Time off: {timeOff}");
 
-		timer.WaitTime = baseSpawnTime - timeOff;
+		timer.WaitTime =
+			baseSpawnTime - timeOff;
 
 		if (arenaDifficulty == 1)
 		{
