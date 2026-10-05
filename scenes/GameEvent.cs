@@ -14,6 +14,9 @@ public partial class GameEvent : Node
 		Dictionary<string, CurrentUpgrade> currentUpgrades
 	);
 
+	[Signal]
+	public delegate void PlayerDamageEventHandler();
+
 	public override void _Ready()
 	{
 		Instance = this;
@@ -36,6 +39,13 @@ public partial class GameEvent : Node
 			SignalName.AbilityUpgradeAdded,
 			upgrade,
 			currentUpgrades
+		);
+	}
+
+	public void EmitPlayerDamage()
+	{
+		EmitSignal(
+			SignalName.PlayerDamage
 		);
 	}
 }

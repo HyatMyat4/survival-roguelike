@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://b70tpqv3xvy05" path="res://scenes/main/Main.cs" id="1_ouso4"]
 [ext_resource type="PackedScene" uid="uid://cqu3cp23eaqyu" path="res://scenes/ui/ArenaTimeManager.tscn" id="2_ow5a4"]
 [ext_resource type="PackedScene" uid="uid://cfc3xhn1lqvd3" path="res://scenes/ui/ExperienceBar.tscn" id="2_yyfjg"]
+[ext_resource type="PackedScene" uid="uid://e2n3lg71d4b" path="res://scenes/ui/Vignette.tscn" id="3_th5th"]
 [ext_resource type="PackedScene" uid="uid://buhb0u1i7hr5d" path="res://scenes/ui/EndScreen.tscn" id="4_a8run"]
 [ext_resource type="PackedScene" uid="uid://dc27mhkrwnfvs" path="res://scenes/game_object/BasicEnemy/BasicEnemy.tscn" id="4_l3cfh"]
 [ext_resource type="PackedScene" uid="uid://57ang5cmytem" path="res://scenes/manager/ExperienceManager.tscn" id="5_yyfjg"]
@@ -16,6 +17,8 @@
 [node name="Main" type="Node" unique_id=1384544731]
 script = ExtResource("1_ouso4")
 endScreenScene = ExtResource("4_a8run")
+
+[node name="Vignette" parent="." unique_id=422807767 instance=ExtResource("3_th5th")]
 
 [node name="ArenaTimeUI" parent="." unique_id=1281314692 node_paths=PackedStringArray("arenaTimeManager") instance=ExtResource("1_6q06x")]
 arenaTimeManager = NodePath("../ArenaTimeManager")

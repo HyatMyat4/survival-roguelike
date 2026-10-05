@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://d2xv2temtgat6" path="res://assets/player/player.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://bmi1e437rscfh" path="res://scenes/player/Player.cs" id="1_dovo2"]
+[ext_resource type="PackedScene" uid="uid://dvamgp126j2ul" path="res://scenes/component/VelocityComponent.tscn" id="2_75vfm"]
 [ext_resource type="PackedScene" uid="uid://br5f4jbtc88ho" path="res://scenes/ability/SwordAbilituyController.tscn" id="2_gmlin"]
 [ext_resource type="PackedScene" uid="uid://cpkcw4d5bou52" path="res://scenes/game_object/game_camera/GameCamera.tscn" id="2_lvxji"]
 [ext_resource type="PackedScene" uid="uid://c2lnlnsf7wjn4" path="res://scenes/component/HealthComponent.tscn" id="2_p47bc"]
@@ -69,9 +70,6 @@ _data = {
 &"Walk": SubResource("Animation_p47bc")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p47bc"]
-bg_color = Color(0.24705882, 0.14901961, 0.19215687, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_75vfm"]
 bg_color = Color(0.2627451, 0.88235295, 0.7019608, 1)
 border_width_left = 1
@@ -98,6 +96,9 @@ script = ExtResource("1_dovo2")
 libraries/ = SubResource("AnimationLibrary_75vfm")
 autoplay = &"Walk"
 
+[node name="VelocityComponent" parent="." unique_id=418521719 instance=ExtResource("2_75vfm")]
+maxSpeed = 90.0
+
 [node name="HealthComponent" parent="." unique_id=665467060 instance=ExtResource("2_p47bc")]
 
 [node name="GameCamera" parent="." unique_id=1311154649 instance=ExtResource("2_lvxji")]
@@ -117,7 +118,6 @@ offset_top = -23.0
 offset_right = 16.0
 offset_bottom = -18.0
 pivot_offset = Vector2(16, 3)
-theme_override_styles/background = SubResource("StyleBoxFlat_p47bc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_75vfm")
 max_value = 1.0
 value = 0.5

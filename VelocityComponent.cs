@@ -4,10 +4,10 @@ using System;
 public partial class VelocityComponent : Node
 {
 	[Export]
-	private float maxSpeed = 75f;
+	public float maxSpeed = 75f;
 
 	[Export]
-	private float acceleration = 500f;
+	public float acceleration = 500f;
 
 	private Vector2 velocity = Vector2.Zero;
 

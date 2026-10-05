@@ -12,10 +12,12 @@ public partial class UpgradeScreen : CanvasLayer
 
 	private HBoxContainer CardContainer;
 
+	private AnimationPlayer animationPlayer;
+
 	public override void _Ready()
 	{
 		CardContainer = GetNode<HBoxContainer>("%CardContainer");
-
+		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		GetTree().Paused = true;
 	}
 
@@ -23,6 +25,8 @@ public partial class UpgradeScreen : CanvasLayer
 		Godot.Collections.Array<AbilityUpgrade> upgrades
 	)
 	{
+		float delay = 0f;
+
 		foreach (var upgrade in upgrades)
 		{
 			var cardInstance =
@@ -31,15 +35,25 @@ public partial class UpgradeScreen : CanvasLayer
 			CardContainer.AddChild(cardInstance);
 
 			cardInstance.SetAbilityUpgrade(upgrade);
+			cardInstance.PlayIn(delay);
 
 			cardInstance.Selected += () => OnUpgradeSelected(upgrade);
+
+			delay += 0.2f;
 		}
 	}
 
-	private void OnUpgradeSelected(AbilityUpgrade upgrade)
+	private async void OnUpgradeSelected(AbilityUpgrade upgrade)
 	{
-		GD.Print($"Selected upgrade: {upgrade.name}");
 		EmitSignal(SignalName.UpgradeSelected, upgrade);
+
+		animationPlayer.Play("out");
+
+		await ToSignal(
+			animationPlayer,
+			AnimationPlayer.SignalName.AnimationFinished
+		);
+
 		GetTree().Paused = false;
 		QueueFree();
 	}

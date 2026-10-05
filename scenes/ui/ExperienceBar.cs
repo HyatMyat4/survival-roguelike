@@ -18,7 +18,10 @@ public partial class ExperienceBar : CanvasLayer
 
 		// XP bar color
 		var fillStyle = new StyleBoxFlat();
-		fillStyle.BgColor = new Color("#8BC34A");
+		fillStyle.BgColor = new Color("#43e1b3");
+		fillStyle.BorderColor = new Color("#3f2631");
+		fillStyle.SetBorderWidthAll(2);
+
 
 		progressBar.AddThemeStyleboxOverride("fill", fillStyle);
 

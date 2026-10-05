@@ -1,11 +1,8 @@
 [gd_scene format=3 uid="uid://1vdugnwdicof"]
 
 [ext_resource type="Script" uid="uid://dgo3t6is5gqbk" path="res://scenes/manager/UpgradeManager.cs" id="1_h8bjr"]
-[ext_resource type="Resource" uid="uid://da73ecan38mqs" path="res://resources/upgrades/sword_rate.tres" id="2_qywu8"]
-[ext_resource type="Resource" uid="uid://bi0xt1ysqxrqu" path="res://resources/upgrades/axe.tres" id="3_2e8nd"]
 [ext_resource type="PackedScene" uid="uid://b4ikvvy7geqck" path="res://scenes/ui/UpgradeScreen.tscn" id="3_kvskr"]
 
 [node name="UpgradeManager" type="Node" unique_id=1468573616]
 script = ExtResource("1_h8bjr")
-upgradePool = Array[Resource]([ExtResource("2_qywu8"), ExtResource("3_2e8nd")])
 upgradeScreenScene = ExtResource("3_kvskr")

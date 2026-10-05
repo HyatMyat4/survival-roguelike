@@ -2,6 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cqc7tiob3r3lh" path="res://scenes/ui/ExperienceBar.cs" id="1_li3vh"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_li3vh"]
+bg_color = Color(0.2627451, 0.88235295, 0.7019608, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.24705882, 0.14901961, 0.19215687, 1)
+
 [node name="ExperienceBar" type="CanvasLayer" unique_id=807594971]
 script = ExtResource("1_li3vh")
 
@@ -17,6 +25,7 @@ custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 size_flags_vertical = 8
 mouse_filter = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_li3vh")
 max_value = 1.0
 value = 0.5
 show_percentage = false

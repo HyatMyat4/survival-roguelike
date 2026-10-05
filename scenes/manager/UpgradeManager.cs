@@ -40,6 +40,8 @@ public partial class UpgradeManager : Node
 			"res://resources/upgrades/sword_damage.tres"
 		);
 
+	private AbilityUpgrade playerSpeed = ResourceLoader.Load<AbilityUpgrade>("res://resources/upgrades/player_speed.tres");
+
 	public override void _Ready()
 	{
 		if (experienceManager == null)
@@ -85,6 +87,7 @@ public partial class UpgradeManager : Node
 		upgradePool.AddItem(axeUpgrade, 10);
 		upgradePool.AddItem(swordRate, 10);
 		upgradePool.AddItem(swordDamage, 10);
+		upgradePool.AddItem(playerSpeed, 10000);
 
 		experienceManager.LevelUp += OnLevelUp;
 	}
