@@ -8,6 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://b6371y8vf7ogn" path="res://scenes/component/VialDropComponent.tscn" id="3_rxi6n"]
 [ext_resource type="PackedScene" uid="uid://ltpnr6m8ohtg" path="res://scenes/component/HurtboxComponent.tscn" id="4_0i5wg"]
 [ext_resource type="PackedScene" uid="uid://bbtrp32usbin3" path="res://scenes/component/HitFlashComponent.tscn" id="6_eqjgx"]
+[ext_resource type="PackedScene" uid="uid://lgmktg2eqdc2" path="res://scenes/component/RandomStreamPlayer2dComponent.tscn" id="9_n3vd5"]
+[ext_resource type="AudioStream" uid="uid://j8w6pw0qp3dp" path="res://assets/audio/footstep_carpet_000.ogg" id="10_bkwn3"]
+[ext_resource type="AudioStream" uid="uid://co5t6wiua0anc" path="res://assets/audio/footstep_carpet_001.ogg" id="11_vck2n"]
+[ext_resource type="AudioStream" uid="uid://dwvqqwmt3t1x7" path="res://assets/audio/footstep_carpet_002.ogg" id="12_6cv3n"]
+[ext_resource type="AudioStream" uid="uid://bbyq1cug6w6bc" path="res://assets/audio/footstep_carpet_003.ogg" id="13_1td0j"]
+[ext_resource type="AudioStream" uid="uid://dmocqt0ee53v4" path="res://assets/audio/footstep_carpet_004.ogg" id="14_l2akr"]
 
 [sub_resource type="Animation" id="Animation_rxi6n"]
 length = 0.001
@@ -146,3 +152,8 @@ shape = SubResource("CircleShape2D_0i5wg")
 visible = false
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_me4lo")
+
+[node name="RandomStreamPlayer2DComponent" parent="." unique_id=572389073 instance=ExtResource("9_n3vd5")]
+unique_name_in_owner = true
+max_distance = 300.0
+streams = Array[AudioStream]([ExtResource("10_bkwn3"), ExtResource("11_vck2n"), ExtResource("12_6cv3n"), ExtResource("13_1td0j"), ExtResource("14_l2akr")])

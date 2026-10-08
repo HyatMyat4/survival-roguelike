@@ -9,6 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://dqmpxp7gtiwmq" path="res://scenes/component/DeathComponent.tscn" id="6_8p57t"]
 [ext_resource type="PackedScene" uid="uid://bbtrp32usbin3" path="res://scenes/component/HitFlashComponent.tscn" id="8_flepq"]
 [ext_resource type="AudioStream" uid="uid://j8w6pw0qp3dp" path="res://assets/audio/footstep_carpet_000.ogg" id="9_ck6y8"]
+[ext_resource type="PackedScene" uid="uid://lgmktg2eqdc2" path="res://scenes/component/RandomStreamPlayer2dComponent.tscn" id="10_7m574"]
+[ext_resource type="AudioStream" uid="uid://co5t6wiua0anc" path="res://assets/audio/footstep_carpet_001.ogg" id="11_trxik"]
+[ext_resource type="AudioStream" uid="uid://dwvqqwmt3t1x7" path="res://assets/audio/footstep_carpet_002.ogg" id="12_6dnmx"]
+[ext_resource type="AudioStream" uid="uid://bbyq1cug6w6bc" path="res://assets/audio/footstep_carpet_003.ogg" id="13_7x7dn"]
+[ext_resource type="AudioStream" uid="uid://dmocqt0ee53v4" path="res://assets/audio/footstep_carpet_004.ogg" id="14_soiry"]
 
 [sub_resource type="Animation" id="Animation_8p57t"]
 length = 0.001
@@ -123,7 +128,7 @@ visible = false
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_qxsxw")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1337281911]
-stream = ExtResource("9_ck6y8")
+[node name="RandomStreamPlayer2DComponent" parent="." unique_id=572389073 instance=ExtResource("10_7m574")]
+unique_name_in_owner = true
 max_distance = 300.0
-bus = &"sfx"
+streams = Array[AudioStream]([ExtResource("9_ck6y8"), ExtResource("11_trxik"), ExtResource("12_6dnmx"), ExtResource("13_7x7dn"), ExtResource("14_soiry")])

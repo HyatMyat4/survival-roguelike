@@ -2,6 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://q4204q4adtnf" path="res://assets/enemy/spider.png" id="1_6l57s"]
 [ext_resource type="Script" uid="uid://ylpi31pvrh8x" path="res://scenes/component/DeathComponent.cs" id="1_e3ie3"]
+[ext_resource type="PackedScene" uid="uid://lgmktg2eqdc2" path="res://scenes/component/RandomStreamPlayer2dComponent.tscn" id="3_5ug8j"]
+[ext_resource type="AudioStream" uid="uid://j8w6pw0qp3dp" path="res://assets/audio/footstep_carpet_000.ogg" id="4_3ln0l"]
+[ext_resource type="AudioStream" uid="uid://co5t6wiua0anc" path="res://assets/audio/footstep_carpet_001.ogg" id="5_mjemf"]
+[ext_resource type="AudioStream" uid="uid://dwvqqwmt3t1x7" path="res://assets/audio/footstep_carpet_002.ogg" id="6_047dc"]
+[ext_resource type="AudioStream" uid="uid://bbyq1cug6w6bc" path="res://assets/audio/footstep_carpet_003.ogg" id="7_w8kxp"]
+[ext_resource type="AudioStream" uid="uid://dmocqt0ee53v4" path="res://assets/audio/footstep_carpet_004.ogg" id="8_d2mup"]
 
 [sub_resource type="Animation" id="Animation_e3ie3"]
 length = 0.001
@@ -85,3 +91,8 @@ one_shot = true
 fixed_fps = 0
 interpolate = false
 process_material = SubResource("ParticleProcessMaterial_e3ie3")
+
+[node name="RandomStreamPlayer2DComponent" parent="." unique_id=572389073 instance=ExtResource("3_5ug8j")]
+unique_name_in_owner = true
+max_distance = 300.0
+streams = Array[AudioStream]([ExtResource("4_3ln0l"), ExtResource("5_mjemf"), ExtResource("6_047dc"), ExtResource("7_w8kxp"), ExtResource("8_d2mup")])

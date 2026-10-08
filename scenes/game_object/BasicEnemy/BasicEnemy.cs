@@ -7,9 +7,14 @@ public partial class BasicEnemy : CharacterBody2D
 	private Node2D visual;
 	private VelocityComponent velocityComponent;
 
+	private HurtboxComponent hurtBoxComponent;
+
+	private RandomStreamPlayer2dComponent audioStreamPlayer;
+
 	public override void _Ready()
 	{
-
+		hurtBoxComponent = GetNode<HurtboxComponent>("HurtboxComponent");
+		audioStreamPlayer = GetNode<RandomStreamPlayer2dComponent>("RandomStreamPlayer2DComponent");
 		visual = GetNode<Node2D>(
 			"Visuals"
 		);
@@ -17,6 +22,8 @@ public partial class BasicEnemy : CharacterBody2D
 		velocityComponent = GetNode<VelocityComponent>(
 			"VelocityComponent"
 		);
+
+		hurtBoxComponent.Hit += OnHit;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -67,5 +74,9 @@ public partial class BasicEnemy : CharacterBody2D
 		}
 	}
 
+	private void OnHit()
+	{
+		audioStreamPlayer.PlayRandom();
+	}
 
 }

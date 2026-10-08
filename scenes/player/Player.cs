@@ -15,11 +15,14 @@ public partial class Player : CharacterBody2D
 
 	public HealthComponent healthComponent;
 
+	private RandomStreamPlayer2dComponent audioStreamPlayer;
+
 	private float baseSpeed = 0;
 
 	public override void _Ready()
 	{
 
+		audioStreamPlayer = GetNode<RandomStreamPlayer2dComponent>("RandomStreamPlayer2DComponent");
 		velocityComponent = GetNode<VelocityComponent>("VelocityComponent");
 		baseSpeed = velocityComponent.maxSpeed;
 
@@ -123,6 +126,7 @@ public partial class Player : CharacterBody2D
 		GameEvent.Instance.EmitSignal(
 			GameEvent.SignalName.PlayerDamage
 		);
+		audioStreamPlayer.PlayRandom();
 	}
 
 	private void OnAbilityUpgradeAdded(

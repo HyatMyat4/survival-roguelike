@@ -7,9 +7,17 @@ public partial class WizardEnemy : CharacterBody2D
 	private Node2D visual;
 	private VelocityComponent velocityComponent;
 
+	private HurtboxComponent hurtBoxComponent;
+
+	private RandomStreamPlayer2dComponent audioStreamPlayer;
+
+
+
 	public override void _Ready()
 	{
 
+		audioStreamPlayer = GetNode<RandomStreamPlayer2dComponent>("RandomStreamPlayer2DComponent");
+		hurtBoxComponent = GetNode<HurtboxComponent>("HurtboxComponent");
 		visual = GetNode<Node2D>(
 			"Visuals"
 		);
@@ -17,6 +25,8 @@ public partial class WizardEnemy : CharacterBody2D
 		velocityComponent = GetNode<VelocityComponent>(
 			"VelocityComponent"
 		);
+
+		hurtBoxComponent.Hit += OnHit;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -65,5 +75,10 @@ public partial class WizardEnemy : CharacterBody2D
 				visual.Scale.Y
 			);
 		}
+	}
+
+	private void OnHit()
+	{
+		audioStreamPlayer.PlayRandom();
 	}
 }

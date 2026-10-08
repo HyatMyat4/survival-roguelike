@@ -16,8 +16,14 @@ public partial class ExperienceVial : Node2D
 
 	private bool isCollecting = false;
 
+	private RandomStreamPlayer2dComponent audioStreamPlayer;
+
+
+
 	public override void _Ready()
 	{
+		audioStreamPlayer = GetNode<RandomStreamPlayer2dComponent>("RandomStreamPlayer2DComponent");
+
 		area2D = GetNode<Area2D>("Area2D");
 		sprite2D = GetNode<Sprite2D>("Sprite2D");
 
@@ -43,6 +49,8 @@ public partial class ExperienceVial : Node2D
 
 		DisableCollision();
 		TweenCollect(player);
+
+		audioStreamPlayer.PlayRandom();
 	}
 
 	private void DisableCollision()

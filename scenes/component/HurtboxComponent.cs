@@ -3,6 +3,10 @@ using Godot;
 
 public partial class HurtboxComponent : Area2D
 {
+
+    [Signal]
+    public delegate void HitEventHandler();
+
     [Export]
     private HealthComponent healthComponent;
 
@@ -36,6 +40,8 @@ public partial class HurtboxComponent : Area2D
             var damage = Mathf.RoundToInt(hitbox.Damage);
 
             floatingText.Start(damage.ToString());
+
+            EmitSignal(SignalName.Hit);
         }
     }
 }

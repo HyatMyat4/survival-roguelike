@@ -13,10 +13,12 @@ public partial class DeathComponent : Node2D
 	private AnimationPlayer animationPlayer;
 	// Called when the node enters the scene tree for the first time.
 	private GpuParticles2D gpuParticles2D;
+
+	private RandomStreamPlayer2dComponent audioStreamPlayer;
 	public override void _Ready()
 	{
 
-
+		audioStreamPlayer = GetNode<RandomStreamPlayer2dComponent>("RandomStreamPlayer2DComponent");
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		gpuParticles2D = GetNode<GpuParticles2D>("GPUParticles2D");
 
@@ -49,6 +51,8 @@ public partial class DeathComponent : Node2D
 		GlobalPosition = spawnPosition;
 
 		animationPlayer.Play("default");
+
+		audioStreamPlayer.PlayRandom();
 
 	}
 
